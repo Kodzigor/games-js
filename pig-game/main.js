@@ -16,6 +16,14 @@ let currentScore = 0;
 let currentPlayer = 1;
 diceEl.classList.add('hidden');
 
+const swithPlayer = () => {
+  document.querySelector(`#current--${currentPlayer}`).textContent = 0;
+  currentPlayer = currentPlayer == 1 ? 2 : 1;
+  currentScore = 0;
+  player1.classList.toggle('player--active');
+  player2.classList.toggle('player--active');
+};
+
 // Rolling the dice
 buttonRoll.addEventListener('click', () => {
   let dice = Math.floor(Math.random() * 6) + 1;
@@ -25,15 +33,18 @@ buttonRoll.addEventListener('click', () => {
 
   if (dice !== 1) {
     currentScore += dice;
-    scores[currentPlayer - 1] += dice;
+
     document.querySelector(`#current--${currentPlayer}`).textContent = currentScore;
   } else {
-    document.querySelector(`#current--${currentPlayer}`).textContent = 0;
-    currentPlayer = currentPlayer == 1 ? 2 : 1;
-    currentScore = 0;
-    player1.classList.toggle('player--active');
-    player2.classList.toggle('player--active');
+    swithPlayer();
   }
 
   console.log(scores);
+});
+
+buttonHold.addEventListener('click', () => {
+  scores[currentPlayer - 1] += currentScore;
+  document.querySelector(`#score--${currentPlayer}`).textContent = scores[currentPlayer - 1];
+
+  swithPlayer();
 });

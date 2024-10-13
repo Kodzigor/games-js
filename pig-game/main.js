@@ -1,7 +1,7 @@
 'use strict';
 
-const player1 = document.querySelector('.player--0');
-const player2 = document.querySelector('.player--1');
+const player1 = document.querySelector('.player--1');
+const player2 = document.querySelector('.player--2');
 const current1 = document.querySelector('#current--1');
 const current2 = document.querySelector('#current--2');
 const score1 = document.querySelector('#score1--1');
@@ -31,6 +31,8 @@ buttonRoll.addEventListener('click', () => {
     document.querySelector(`#current--${currentPlayer}`).textContent = 0;
     currentPlayer = currentPlayer == 1 ? 2 : 1;
     currentScore = 0;
+    player1.classList.toggle('player--active');
+    player2.classList.toggle('player--active');
   }
 
   console.log(scores);

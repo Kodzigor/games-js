@@ -14,6 +14,7 @@ const diceEl = document.querySelector('.dice');
 let scores = [0, 0];
 let currentScore = 0;
 let currentPlayer = 1;
+let playing = true;
 diceEl.classList.add('hidden');
 
 const swithPlayer = () => {
@@ -26,30 +27,33 @@ const swithPlayer = () => {
 
 // Rolling the dice
 buttonRoll.addEventListener('click', () => {
-  let dice = Math.floor(Math.random() * 6) + 1;
+  if (playing) {
+    let dice = Math.floor(Math.random() * 6) + 1;
 
-  diceEl.classList.remove('hidden');
-  diceEl.src = `./images/dice-${dice}.png`;
+    diceEl.classList.remove('hidden');
+    diceEl.src = `./images/dice-${dice}.png`;
 
-  if (dice !== 1) {
-    currentScore += dice;
+    if (dice !== 1) {
+      currentScore += dice;
 
-    document.querySelector(`#current--${currentPlayer}`).textContent = currentScore;
-  } else {
-    swithPlayer();
+      document.querySelector(`#current--${currentPlayer}`).textContent = currentScore;
+    } else {
+      swithPlayer();
+    }
   }
-
-  console.log(scores);
 });
 
 buttonHold.addEventListener('click', () => {
-  scores[currentPlayer - 1] += currentScore;
-  document.querySelector(`#score--${currentPlayer}`).textContent = scores[currentPlayer - 1];
+  if (playing) {
+    scores[currentPlayer - 1] += currentScore;
+    document.querySelector(`#score--${currentPlayer}`).textContent = scores[currentPlayer - 1];
 
-  if (scores[currentPlayer - 1] >= 20) {
-    document.querySelector(`.player--${currentPlayer}`).classList.add('player--winner');
-    document.querySelector(`.player--${currentPlayer}`).classList.remove('player--active');
-  } else {
-    swithPlayer();
+    if (scores[currentPlayer - 1] >= 20) {
+      playing = false;
+      document.querySelector(`.player--${currentPlayer}`).classList.add('player--winner');
+      document.querySelector(`.player--${currentPlayer}`).classList.remove('player--active');
+    } else {
+      swithPlayer();
+    }
   }
 });

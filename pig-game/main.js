@@ -46,5 +46,10 @@ buttonHold.addEventListener('click', () => {
   scores[currentPlayer - 1] += currentScore;
   document.querySelector(`#score--${currentPlayer}`).textContent = scores[currentPlayer - 1];
 
-  swithPlayer();
+  if (scores[currentPlayer - 1] >= 20) {
+    document.querySelector(`.player--${currentPlayer}`).classList.add('player--winner');
+    document.querySelector(`.player--${currentPlayer}`).classList.remove('player--active');
+  } else {
+    swithPlayer();
+  }
 });
